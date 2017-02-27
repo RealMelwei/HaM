@@ -91,8 +91,22 @@ public class PlayerDataScript : MonoBehaviour {
 			Deck [i - 1].NummerInKlasse = ((i - 1) / AnzahlLevel) % AnzahlproKlasse + 1;
 			Deck[i-1].Anzahl=0;
 		}
-			
-		StandardBesitz [0].Anzahl = 8;
+        for (int i = 1; i <= AnzahlLevel * AnzahlKlassen * AnzahlproKlasse; i++)
+        {
+            StandardBesitz[i - 1].Klasse = Mathf.CeilToInt((i - 1) / (AnzahlLevel * AnzahlproKlasse)) + 1;
+            StandardBesitz[i - 1].Level = (i - 1) % AnzahlLevel + 1;
+            StandardBesitz[i - 1].NummerInKlasse = ((i - 1) / AnzahlLevel) % AnzahlproKlasse + 1;
+            StandardBesitz[i - 1].Anzahl = 0;
+        }
+        for (int i = 1; i <= AnzahlLevel * AnzahlKlassen * AnzahlproKlasse; i++)
+        {
+            StandardDeck[i - 1].Klasse = Mathf.CeilToInt((i - 1) / (AnzahlLevel * AnzahlproKlasse)) + 1;
+            StandardDeck[i - 1].Level = (i - 1) % AnzahlLevel + 1;
+            StandardDeck[i - 1].NummerInKlasse = ((i - 1) / AnzahlLevel) % AnzahlproKlasse + 1;
+            StandardDeck[i - 1].Anzahl = 0;
+        }
+
+        StandardBesitz [0].Anzahl = 8;
 		StandardBesitz [1].Anzahl=2;
 		StandardBesitz [2].Anzahl = 2;
 		StandardBesitz [3].Anzahl=2;
@@ -275,8 +289,23 @@ public class PlayerDataScript : MonoBehaviour {
 			Silber=StandardSilber;
 			Gold=StandardGold;
 			EP = StandardEP;
-			Deck=StandardDeck;
-			Besitz=StandardBesitz;
+
+            for(int i = 0; i < StandardDeck.Length;i++)
+            {
+                Deck[i].Anzahl = StandardDeck[i].Anzahl;
+                Deck[i].Klasse = StandardDeck[i].Klasse;
+                Deck[i].Level = StandardDeck[i].Level;
+                Deck[i].NummerInKlasse = StandardDeck[i].NummerInKlasse;
+            }
+            for (int i = 0; i < StandardDeck.Length;i++)
+            {
+                Besitz[i].Anzahl = StandardBesitz[i].Anzahl;
+                Besitz[i].Klasse = StandardBesitz[i].Klasse;
+                Besitz[i].Level = StandardBesitz[i].Level;
+                Besitz[i].NummerInKlasse = StandardBesitz[i].NummerInKlasse;
+                Debug.Log(Besitz[i].Anzahl + "Anz, " + Besitz[i].Klasse + "Kla, " + Besitz[i].Level + "Lvl, " + Besitz[i].NummerInKlasse+"Nr");
+            }
+            
 			SetValuesToStandard=false;
 		}
 		if (LogMyDeck) {

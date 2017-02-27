@@ -69,11 +69,23 @@ public class DeckScript : MonoBehaviour{
 			//Array.Resize(ref GameObject.Find ("PlayerData").GetComponent<PlayerDataScript> ().Deck,DeckSize);
 		}
 		if (!Ausgefuehrt) {
+            //Aufräumen
+            int max = GameObject.FindGameObjectsWithTag("DeckButton").Length;
+            for (int i = 0; i < max; i++)
+            {
+                GameObject.Destroy(GameObject.FindGameObjectsWithTag("DeckButton")[0]);
+            }
+
+            //Neue Buttons setzen
 			for (int i=0; i<GameObject.Find("PlayerData").GetComponent<PlayerDataScript>().Besitz.Length; i++) {
 				if(GameObject.Find("PlayerData").GetComponent<PlayerDataScript>().Besitz[i].Anzahl>GameObject.Find("PlayerData").GetComponent<PlayerDataScript>().Deck[i].Anzahl){
 					Debug.Log("Test");
 					for(int x=1; x<=GameObject.Find("PlayerData").GetComponent<PlayerDataScript>().Besitz[i].Anzahl-GameObject.Find("PlayerData").GetComponent<PlayerDataScript>().Deck[i].Anzahl;x++){
-						//Debug.Log("Im Besitz, aber nicht im Deck: " + i.ToString());
+
+                        if (i == 1)
+                        {
+                            Debug.Log("Im Besitz, aber nicht im Deck: " + (GameObject.Find("PlayerData").GetComponent<PlayerDataScript>().Besitz[i].Anzahl - GameObject.Find("PlayerData").GetComponent<PlayerDataScript>().Deck[i].Anzahl).ToString());
+                        }
 						GameObject KnopfObjekt = Instantiate(Button) as GameObject;
 						KnopfObjekt.transform.SetParent(GameObject.Find("Deck").transform);
 						KnopfObjekt.transform.localScale=new Vector3(KnopfObjekt.transform.localScale.x*Screen.width/1500f*1.5f, KnopfObjekt.transform.localScale.y*Screen.height/600f*1.3f);
@@ -83,8 +95,7 @@ public class DeckScript : MonoBehaviour{
 						KnopfObjekt.GetComponent<DeckButtonScript>().OnMouseOverPanel=ButtonOnMouseOverPanel;
 						KnopfObjekt.GetComponent<DeckButtonScript>().ChangeDeck();
 						KnopfObjekt.GetComponent<DeckButtonScript>().Kreatur=GameObject.Find("PlayerData").GetComponent<PlayerDataScript>().Besitz[i];
-                        Debug.Log("Klasse: "+GameObject.Find("PlayerData").GetComponent<PlayerDataScript>().Besitz[i].Klasse+"; Nummer: "+ GameObject.Find("PlayerData").GetComponent<PlayerDataScript>().Besitz[i].NummerInKlasse+"; Level:"+ GameObject.Find("PlayerData").GetComponent<PlayerDataScript>().Besitz[i].Level);
-						KnopfObjekt.transform.FindChild("Text").gameObject.GetComponent<UnityEngine.UI.Text>().text=GameObject.Find("PlayerData").GetComponent<PlayerDataScript>().Creatures[i].Name;
+                        KnopfObjekt.transform.FindChild("Text").gameObject.GetComponent<UnityEngine.UI.Text>().text=GameObject.Find("PlayerData").GetComponent<PlayerDataScript>().Creatures[i].Name;
 						switch (GameObject.Find("PlayerData").GetComponent<PlayerDataScript>().Creatures[i].Level){
 						case 1:
 							KnopfObjekt.GetComponent<UnityEngine.UI.Button>().image.color=Color.white;
